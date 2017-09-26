@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style type="text/css">
+        .rot1 {
+            -moz-transform: rotate(90deg);
+            -webkit-transform: rotate(90deg);
+            transform: rotate(90deg);
+            filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+            -ms-filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+        }
+
+        .rot2 {
+            -moz-transform: rotate(180deg);
+            -webkit-transform: rotate(180deg);
+            transform: rotate(180deg);
+            filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
+            -ms-filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
+        }
+
+        .rot3 {
+            -moz-transform: rotate(270deg);
+            -webkit-transform: rotate(270deg);
+            transform: rotate(270deg);
+            filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+            -ms-filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+        }
+
+        #imageView_container{
+            border: 2px solid #000000;
+        }
+    </style>
+
+    <script src="js/jquery-1.10.2.js"></script>
+    <script src="js/jquery-browser.js"></script>
+    <script src="js/jquery.imageView.js"></script>
+</head>
+<body>
+<div id="imageView_container" style="overflow: hidden; position: relative; width: 800px; height: 500px; ">
+    <img src="images/1.jpg" id="rotImg" style="cursor: move; visibility: visible; position: absolute; width: 800px; height: 500px;" />
+</div>
+<div style="padding-top:5px;">
+    <input type="button" value="放大" onclick="imgToSize(100)">
+    <input type="button" value="缩小" onclick="imgToSize(-100);">
+    <input type="button" value="向右旋转" id="rotRight">
+    <input type="button" value="向左旋转" id="rotLeft">
+</div>
+
+<script type="text/javascript">
+    $(function () {
+    var param = {
+        right: document.getElementById("rotRight"),
+        left: document.getElementById("rotLeft"),
+        img: document.getElementById("rotImg"),
+        rot: 0
+    };
+
+    var fun = {
+        right: function () {
+            param.rot += 1;
+            param.img.className = "rot" + param.rot;
+            if (param.rot === 3) {
+                param.rot = -1;
+            }
+        },
+        left: function () {
+            param.rot -= 1;
+            if (param.rot === -1) {
+                param.rot = 3;
+            }
+            param.img.className = "rot" + param.rot;
+        }
+    };
+    param.right.onclick = function () {
+        fun.right();
+        return false;
+    };
+    param.left.onclick = function () {
+        fun.left();
+        return false;
+    };
+
+    $('#imageView_container').imageView({ width: 800, height: 500 });
+
+    });
+
+    var size = 0;
+
+
+    //放大缩小图片
+    function imgToSize(size) {
+        var img = $("#rotImg");
+        var oWidth = img.width(); //取得图片的实际宽度
+        var oHeight = img.height(); //取得图片的实际高度
+
+        img.width(oWidth + size);
+        img.height(oHeight + size / oWidth * oHeight);
+    }
+</script>
+</body>
+</html>
