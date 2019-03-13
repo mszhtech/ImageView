@@ -75,12 +75,12 @@ image_view_last_id = 0;
                 return false;
             });
 
-            $(document).bind('mouseup.imgview', function (event) {
+            $img.bind('mouseup.imgview', function (event) {
                 $img.data('mousedown', false);
                 return false;
             });
 
-            $(document).bind('mousemove.imgview', function (event) {
+            $img.bind('mousemove.imgview', function (event) {
                 if ($img.data('mousedown')) {
                     var dx = event.pageX - settings['pageX'];
                     var dy = event.pageY - settings['pageY'];
